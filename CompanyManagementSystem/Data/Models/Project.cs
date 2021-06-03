@@ -10,13 +10,13 @@ public    class Project
     {
         public Project()
         {
-            this.Employees = new HashSet<Employee>();
+            this.Employees = new HashSet<EmployeesProjects>();
         }
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public ICollection<Employee> Employees { get; set; }
+        public ICollection<EmployeesProjects> Employees { get; set; }
 
     }
 }
