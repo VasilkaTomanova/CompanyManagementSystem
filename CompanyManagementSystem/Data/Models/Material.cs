@@ -10,9 +10,11 @@ namespace CompanyManagementSystem.Data.Models
     {
         public int Id { get; set; }
 
-        public Employee Author { get; set; }
 
         public int AuthorId { get; set; }
+        public Employee Author { get; set; }
+
+       
 
         public string Url { get; set; }
 
