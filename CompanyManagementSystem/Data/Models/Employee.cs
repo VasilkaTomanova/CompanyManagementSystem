@@ -10,7 +10,7 @@ namespace CompanyManagementSystem.Data.Models
     {
         public Employee()
         {
-
+            //Initialize the collection correct
         }
         public int Id { get; set; }
 
@@ -33,7 +33,7 @@ namespace CompanyManagementSystem.Data.Models
 
         public int ManagerId { get; set; }
 
-
+        //TODO
         public ICollection<Material> Materials { get; set; }
 
     }
