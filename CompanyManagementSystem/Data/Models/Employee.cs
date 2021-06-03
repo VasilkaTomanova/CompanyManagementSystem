@@ -48,7 +48,12 @@ namespace CompanyManagementSystem.Data.Models
         public ICollection<Project> Projects { get; set; }
 
 
+        //Could make with persantage or -=sum
+        public void ChangeSalary(decimal newSalary)
+        {
+            this.Salary = newSalary;
 
+        }
 
     }
 }
