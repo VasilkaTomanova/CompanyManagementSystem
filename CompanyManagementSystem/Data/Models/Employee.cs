@@ -11,6 +11,11 @@ namespace CompanyManagementSystem.Data.Models
         public Employee()
         {
             //Initialize the collection correct
+            this.OwnMaterials = new HashSet<Material>();
+            this.Projects = new HashSet<Project>();
+
+
+
         }
         public int Id { get; set; }
 
@@ -29,15 +34,21 @@ namespace CompanyManagementSystem.Data.Models
         public Rank Rank { get; set; }
 
 
+        public int ManagerId { get; set; }
         public Employee Manager { get; set; }
 
-        public int ManagerId { get; set; }
+       
 
         //TODO
         public bool IsActiveEmployee { get; set; }
 
         //TODO
-        public ICollection<Material> Materials { get; set; }
+        public ICollection<Material> OwnMaterials { get; set; }
+
+        public ICollection<Project> Projects { get; set; }
+
+
+
 
     }
 }
