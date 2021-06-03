@@ -43,7 +43,6 @@ namespace CompanyManagementSystem.Data.Models
         public void ChangeSalary(decimal newSalary)
         {
 
-
             this.Salary = newSalary;
 
         }
