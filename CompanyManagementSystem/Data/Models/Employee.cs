@@ -31,13 +31,7 @@ namespace CompanyManagementSystem.Data.Models
 
         public Position Position { get; set; }
 
-        public Rank Rank { get; set; }
-
-
-        public int ManagerId { get; set; }
-        public Employee Manager { get; set; }
-
-       
+        public int Rank { get; set; }       
 
         //TODO
         public bool IsActiveEmployee { get; set; }
@@ -51,6 +45,8 @@ namespace CompanyManagementSystem.Data.Models
         //Could make with persantage or -=sum
         public void ChangeSalary(decimal newSalary)
         {
+
+
             this.Salary = newSalary;
 
         }
