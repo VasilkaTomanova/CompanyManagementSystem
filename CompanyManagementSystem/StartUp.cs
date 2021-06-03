@@ -12,6 +12,8 @@ namespace CompanyManagementSystem
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
+
+
         }
     }
 }
