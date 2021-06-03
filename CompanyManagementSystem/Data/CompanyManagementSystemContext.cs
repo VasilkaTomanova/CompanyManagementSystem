@@ -49,6 +49,8 @@ namespace CompanyManagementSystem.Data
     .WithMany(s => s.Projects)
     .HasForeignKey(e => e.EmployeeId);
 
+           
+
         }
 
 
