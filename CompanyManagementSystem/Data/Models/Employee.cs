@@ -33,7 +33,7 @@ namespace CompanyManagementSystem.Data.Models
 
 
        
-        public int ManagerId { get; set; }
+        public int? ManagerId { get; set; }
         public Employee Manager { get; set; }
 
 
