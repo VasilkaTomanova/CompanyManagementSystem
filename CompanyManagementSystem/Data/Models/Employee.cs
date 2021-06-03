@@ -34,6 +34,9 @@ namespace CompanyManagementSystem.Data.Models
         public int ManagerId { get; set; }
 
         //TODO
+        public bool IsActiveEmployee { get; set; }
+
+        //TODO
         public ICollection<Material> Materials { get; set; }
 
     }
