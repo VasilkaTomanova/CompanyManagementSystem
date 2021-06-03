@@ -1,2 +1,2 @@
-# CompanyManagementSystem
+# CMS
 Целта е ....
