@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CompanyManagementSystem.Data.Models
 {
- public   enum Range
+ public   enum Rank
     {
         Junior = 1,
         Medium = 2,
