@@ -12,7 +12,7 @@ namespace CompanyManagementSystem.Data.Models
         {
             //Initialize the collection correct
             this.OwnMaterials = new HashSet<Material>();
-            this.Projects = new HashSet<Project>();
+            this.Projects = new HashSet<EmployeesProjects>();
         }
         public int Id { get; set; }
 
@@ -36,7 +36,7 @@ namespace CompanyManagementSystem.Data.Models
         //TODO
         public ICollection<Material> OwnMaterials { get; set; }
 
-        public ICollection<Project> Projects { get; set; }
+        public ICollection<EmployeesProjects> Projects { get; set; }
 
 
         //Could make with persantage or -=sum
