@@ -14,8 +14,7 @@ namespace CompanyManagementSystem.Data.Models
 
         public int AuthorId { get; set; }
 
-
-
+        public string Url { get; set; }
 
 
 
