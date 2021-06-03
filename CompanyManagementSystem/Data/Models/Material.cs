@@ -18,6 +18,7 @@ namespace CompanyManagementSystem.Data.Models
 
         public string Url { get; set; }
 
+        //TODO actions
 
 
     }
