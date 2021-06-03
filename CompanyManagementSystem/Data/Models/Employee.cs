@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,14 @@ namespace CompanyManagementSystem.Data.Models
         public Position Position { get; set; }
 
         public int Rank { get; set; }       
+
+
+       
+        public int ManagerId { get; set; }
+        public Employee Manager { get; set; }
+
+
+
 
         //TODO
         public bool IsActiveEmployee { get; set; }
