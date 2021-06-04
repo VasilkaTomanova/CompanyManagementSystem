@@ -12,7 +12,7 @@ namespace CompanyManagementSystem
         {
 
             CompanyManagementSystemContext context = new CompanyManagementSystemContext();
-            //context.Database.EnsureDeleted();
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
 
@@ -49,6 +49,10 @@ namespace CompanyManagementSystem
 
                 if(command == "1")
                 {
+                    List<Material> myMaterials = context.Materials.Where(m => m.AuthorId == currentEmployee.Id).ToList();
+                    Console.WriteLine($"You have {myMaterials.Count} materials and they are:");
+                    Console.WriteLine(string.Join(", ", myMaterials.Select(m=>m.Title)));
+                    Console.WriteLine("If you wannt change a material, write the title:");
                     //TODO
                 }
                 else if (command == "2")
@@ -59,10 +63,13 @@ namespace CompanyManagementSystem
                 {
                     Console.WriteLine("Your choise is invalid! Try again!");
                 }
-            }
 
 
 
-        }
+            } // end while
+
+
+
+        } // end main
     }
 }
