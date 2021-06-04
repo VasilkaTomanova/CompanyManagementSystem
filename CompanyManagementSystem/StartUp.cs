@@ -14,6 +14,8 @@ namespace CompanyManagementSystem
             CompanyManagementSystemContext context = new CompanyManagementSystemContext();
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
+            CreateDataBase cb = new CreateDataBase();
+            cb.CreateDatabase(context);
 
 
             //Entry in system 
@@ -96,16 +98,30 @@ namespace CompanyManagementSystem
                     currentMaterialToChange.Title = newNameOfMaterial;
                     Console.WriteLine
                         ($"You successfully change the name of {currentTitleOfMaterialToChnage} to this new name {currentMaterialToChange.Title}");
-
                 }
                 else if (changeCommand == "2")
                 {
-
-
+                    Console.WriteLine("Write the new protection level: private, public, another");
+                    string newLevelOfprotection = Console.ReadLine();
+                    Access newAcces = (Access)Enum.Parse(typeof(Access), newLevelOfprotection, true);
+                    switch (newLevelOfprotection.ToLower())
+                    {
+                        case "private":
+                            currentMaterialToChange.Access = newAcces;
+                            break;
+                        case "public":
+                            currentMaterialToChange.Access = newAcces;
+                            break;
+                        //TODO logic here and in the class
+                        case "another":
+                            break;
+                    }
                 }
                 else
                 {
-
+                    Console.WriteLine("Choose a relevant number:");
+                    //Be carefull with eventually ednless recursion
+                    CommandsInYourOnwMaterials(context, currentEmployee);
                 }
 
             }
@@ -118,7 +134,7 @@ namespace CompanyManagementSystem
         }
 
 
-
+     
 
     }
 }
