@@ -80,7 +80,7 @@ namespace CompanyManagementSystem
 
 
             } // end while
-
+            Console.WriteLine("Bye!");
 
 
         } // end main
