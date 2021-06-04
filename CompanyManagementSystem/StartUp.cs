@@ -10,19 +10,17 @@ namespace CompanyManagementSystem
     {
         public static void Main(string[] args)
         {
-
+            //1.Create data base
             CompanyManagementSystemContext context = new CompanyManagementSystemContext();
             //context.Database.EnsureDeleted();
             //context.Database.EnsureCreated();
-
             //CreateDataBase cb = new CreateDataBase();
             //cb.CreateDatabase(context);
 
 
-            //Entry in system 
+            //2. Entry in system 
             Console.Write("Enter your username:");
             string name = Console.ReadLine();
-
             List<Employee> employyes = context.Employees.ToList();
             Employee currentEmployee = employyes.FirstOrDefault(e => e.Username == name);
             if (currentEmployee == null)
@@ -30,10 +28,8 @@ namespace CompanyManagementSystem
                 Console.WriteLine("Your username dosn't exist in our system. Sorry, try again later!");
                 return;
             }
-
             Console.Write("Enter your pass:");
             string pass = Console.ReadLine();
-
             if (currentEmployee.Password != pass)
             {
                 Console.WriteLine("Your username and password are diffrennt. Sorry, try again later!");
@@ -41,12 +37,12 @@ namespace CompanyManagementSystem
             }
 
 
-            //In own profile
+            //3. In own profile - do something while reading commands from console
             Console.WriteLine($"Welcome, {currentEmployee.FirstName} {currentEmployee.LastName}!");
             while (true)
             {
                 //read commmand
-                Console.WriteLine("For your own materials: 1, for materials of other people: 2, to see the list of your collegues: 3, for exit: 4");
+                Console.WriteLine("For your own materials: 1, for materials of other people: 2, to see the list of your colleagues: 3, for exit: 4");
                 string command = Console.ReadLine();
 
                 if (command == "1")
@@ -61,10 +57,12 @@ namespace CompanyManagementSystem
                 }
                 else if (command.ToLower() == "3")
                 {
-
+                    //In this case you look your colleagues
                 }
                 else if (command.ToLower() == "4")
                 {
+                    // If we have web app we must "delete" the current client information, he still could be in the app
+                    // but withour specific permisions
                     name = "";
                     pass = "";
                     break;
@@ -154,10 +152,12 @@ namespace CompanyManagementSystem
                 {
                     Console.WriteLine("This document is public. You can manage it:");
                     Console.WriteLine($"Details: Title {materialLookingFor.Title} with Author {materialLookingFor.Author.FirstName} {materialLookingFor.Author.LastName} and address {materialLookingFor.Url}");
-                } else if (materialLookingFor.Access.ToString() != "Priavte")
+                }
+                else if (materialLookingFor.Access.ToString() != "Priavte")
                 {
                     Console.WriteLine("Sorry, this document is private, and you can see only the title.");
-                } else
+                }
+                else
                 {
                     //TODO logic if myId is in the list with eligible id
                 }
