@@ -12,7 +12,7 @@ namespace CompanyManagementSystem
         {
 
             CompanyManagementSystemContext context = new CompanyManagementSystemContext();
-            context.Database.EnsureDeleted();
+            //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
 
