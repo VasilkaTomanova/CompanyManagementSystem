@@ -51,17 +51,17 @@ namespace CompanyManagementSystem
 
                 if (command == "1")
                 {
-                    // If you are in this case you have all permission to do everything to these materials, because there yours                
+                    // If you are in this case you have all permission to do everything to these materials, because they are yours                
                     CommandsInYourOnwMaterials(context, currentEmployee);
                 }
                 else if (command == "2")
                 {
-                    // If you are in this case you must check the level of permision of materials
+                    // If you are in this case there is checking the level of permision of materials
                     CommandsInOtherMaterials(context, currentEmployee);
                 }
                 else if (command.ToLower() == "3")
                 {
-                 
+
                 }
                 else if (command.ToLower() == "4")
                 {
@@ -141,6 +141,11 @@ namespace CompanyManagementSystem
         public static CompanyManagementSystemContext CommandsInOtherMaterials
              (CompanyManagementSystemContext context, Employee currentEmployee)
         {
+            List<Material> materialOfOtherPeople = context.Materials.Where(m => m.AuthorId != currentEmployee.Id).ToList();
+            Console.WriteLine($"In our system we have these materials: {string.Join(", ", materialOfOtherPeople.Select(m => m.Title))}");
+
+
+
             return context;
         }
 
