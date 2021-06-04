@@ -15,6 +15,7 @@ namespace CompanyManagementSystem.Data.Models
             this.idsWithAccessToMyMaterials = new List<int>();
         }
 
+        public string Title { get; set; }
         public int Id { get; set; }
 
 
