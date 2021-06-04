@@ -34,21 +34,31 @@ namespace CompanyManagementSystem.Data
             Employee employee2 = new Employee();
             employee2.FirstName = "Briana"; employee2.LastName = "Dimitrova";
             employee2.Username = "bridi"; employee2.Password = "654321";
-            employee2.PositionId = 4; employee2.Salary = 8000;
+            employee2.PositionId = 4; employee2.Salary = 1500;
             employee2.Rank = 2; employee2.IsActiveEmployee = true;
+            Employee employee3 = new Employee();
+            employee3.FirstName = "Ivan"; employee3.LastName = "Ivanov";
+            employee3.Username = "iivanov"; employee3.Password = "ivan1234";
+            employee3.PositionId = 1; employee3.Salary = 1800;
+            employee3.Rank = 2; employee3.IsActiveEmployee = true;
             context.Employees.Add(employee1);
             context.Employees.Add(employee2);
+            context.Employees.Add(employee3);
             context.SaveChanges();
 
-            Material materialToVasi1 = new Material();
-            materialToVasi1.Title = "Iron candle"; materialToVasi1.AuthorId = 1;
-            Material materialToVasi2 = new Material();
-            materialToVasi2.Title = "No title"; materialToVasi2.AuthorId = 1;
-            Material materialToBri = new Material();
-            materialToBri.Title = "Title"; materialToBri.AuthorId = 2;
-            context.Materials.Add(materialToVasi1);
-            context.Materials.Add(materialToVasi2);
-            context.Materials.Add(materialToBri);
+            Material material1 = new Material();
+            material1.Title = "Iron candle"; material1.AuthorId = 1;
+            Material material2 = new Material();
+            material2.Title = "No title"; material2.AuthorId = 1;
+            Material material3 = new Material();
+            material3.Title = "Title"; material3.AuthorId = 1;
+            Material material4 = new Material();
+            material4.Title = "Material 3"; material4.AuthorId = 2;
+            context.Materials.Add(material1);
+            context.Materials.Add(material2);
+            context.Materials.Add(material3);
+            context.Materials.Add(material4);
+
 
 
             context.SaveChanges();
