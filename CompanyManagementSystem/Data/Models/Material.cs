@@ -8,17 +8,31 @@ namespace CompanyManagementSystem.Data.Models
 {
   public class Material
     {
+        private List<int> idsWithAccessToMyMaterials;
+
+        public Material()
+        {
+            this.idsWithAccessToMyMaterials = new List<int>();
+        }
+
         public int Id { get; set; }
 
 
         public int AuthorId { get; set; }
         public Employee Author { get; set; }
 
-       
+        public Access Access { get; set; }
 
         public string Url { get; set; }
 
-        //TODO actions
+        
+        //TODO
+        public void ChangeAccess()
+        {
+            //this.idsWithAccessToMyMaterials.Clear();
+        }
+
+
 
 
     }
