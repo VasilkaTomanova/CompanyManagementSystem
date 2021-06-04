@@ -104,7 +104,7 @@ namespace CompanyManagementSystem
                     string changeCommand = Console.ReadLine();
                     if (changeCommand == "1")
                     {
-                        Console.WriteLine("Write the new title of your material");
+                        Console.WriteLine("Write the new title of your material:");
                         string newNameOfMaterial = Console.ReadLine();
                         currentMaterialToChange.Title = newNameOfMaterial;
                         Console.WriteLine
@@ -143,7 +143,7 @@ namespace CompanyManagementSystem
             }
             else
             {
-                Console.WriteLine("Sorry, but you havn 't any materials!");
+                Console.WriteLine("Sorry, but you havn' t any materials!");
             }
 
 
@@ -169,19 +169,40 @@ namespace CompanyManagementSystem
                 {
                     Console.WriteLine("This document is public. You can manage it:");
                     Console.WriteLine($"Details: Title {materialLookingFor.Title} with Author {materialLookingFor.Author.FirstName} {materialLookingFor.Author.LastName} and address {materialLookingFor.Url}");
+                    Console.WriteLine("For change title press 1, for url address press 2:");
+                    string command = Console.ReadLine();
+                    if (command == "1")
+                    {
+                        Console.WriteLine("PLease enter the new title of this document:");
+                        string newNameOfDoc = Console.ReadLine();
+                        materialLookingFor.Title = newNameOfDoc;
+                        Console.WriteLine($"You change the title ot {title} with this one {materialLookingFor.Title}");
+                    }
+                    else if (command == "2")
+                    {
+                        Console.WriteLine("PLease enter the new url of this document:");
+                        string newAddressOfDoc = Console.ReadLine();
+                        materialLookingFor.Url = newAddressOfDoc;
+                        Console.WriteLine($"You change the url to {materialLookingFor.Url}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid command");
+                    }
                 }
-                else if (materialLookingFor.Access.ToString() != "Priavte")
+                else if (materialLookingFor.Access.ToString() == "Private")
                 {
                     Console.WriteLine("Sorry, this document is private, and you can see only the title.");
                 }
                 else
                 {
+                    Console.WriteLine("Still working on this feature \"manage documents\"");
                     //TODO logic if myId is in the list with eligible id
                 }
             }
             else
             {
-
+                Console.WriteLine($"We have not a material with name {title}");
             }
             context.SaveChanges();
             return context;
