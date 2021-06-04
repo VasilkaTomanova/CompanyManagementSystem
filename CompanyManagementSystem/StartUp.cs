@@ -143,8 +143,29 @@ namespace CompanyManagementSystem
         {
             List<Material> materialOfOtherPeople = context.Materials.Where(m => m.AuthorId != currentEmployee.Id).ToList();
             Console.WriteLine($"In our system we have these materials: {string.Join(", ", materialOfOtherPeople.Select(m => m.Title))}");
+            Console.WriteLine("If you wanna see details of a material, please write its name:");
+            string title = Console.ReadLine();
 
+            Material materialLookingFor = materialOfOtherPeople.FirstOrDefault(m => m.Title == title);
 
+            if (materialLookingFor != null)
+            {
+                if (materialLookingFor.Access.ToString() == "Public")
+                {
+                    Console.WriteLine("This document is public. You can manage it:");
+                    Console.WriteLine($"Details: Title {materialLookingFor.Title} with Author {materialLookingFor.Author.FirstName} {materialLookingFor.Author.LastName} and address {materialLookingFor.Url}");
+                } else if (materialLookingFor.Access.ToString() != "Priavte")
+                {
+                    Console.WriteLine("Sorry, this document is private, and you can see only the title.");
+                } else
+                {
+                    //TODO logic if myId is in the list with eligible id
+                }
+            }
+            else
+            {
+
+            }
 
             return context;
         }
