@@ -12,10 +12,11 @@ namespace CompanyManagementSystem
         {
 
             CompanyManagementSystemContext context = new CompanyManagementSystemContext();
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
-            CreateDataBase cb = new CreateDataBase();
-            cb.CreateDatabase(context);
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
+
+            //CreateDataBase cb = new CreateDataBase();
+            //cb.CreateDatabase(context);
 
 
             //Entry in system 
@@ -45,7 +46,7 @@ namespace CompanyManagementSystem
             while (true)
             {
                 //read commmand
-                Console.WriteLine("For your materials: 1, for others materials: 2");
+                Console.WriteLine("For your own materials: 1, for materials of other people: 2, to see the list of your collegues: 3, for exit: 4");
                 string command = Console.ReadLine();
 
                 if (command == "1")
@@ -56,9 +57,13 @@ namespace CompanyManagementSystem
                 else if (command == "2")
                 {
                     // If you are in this case you must check the level of permision of materials
-                    //TODO
+                    CommandsInOtherMaterials(context, currentEmployee);
                 }
-                else if (command.ToLower() == "exit")
+                else if (command.ToLower() == "3")
+                {
+                 
+                }
+                else if (command.ToLower() == "4")
                 {
                     name = "";
                     pass = "";
@@ -89,7 +94,7 @@ namespace CompanyManagementSystem
                                             .FirstOrDefault(m => m.Title == currentTitleOfMaterialToChnage);
             if (currentMaterialToChange != null)
             {
-                Console.WriteLine("For change the title push 1, for the access level 2");
+                Console.WriteLine("For change the title of this material push 1, for the access level 2");
                 string changeCommand = Console.ReadLine();
                 if (changeCommand == "1")
                 {
@@ -133,8 +138,12 @@ namespace CompanyManagementSystem
             return context;
         }
 
+        public static CompanyManagementSystemContext CommandsInOtherMaterials
+             (CompanyManagementSystemContext context, Employee currentEmployee)
+        {
+            return context;
+        }
 
-     
 
     }
 }
