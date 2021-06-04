@@ -12,10 +12,12 @@ namespace CompanyManagementSystem
         {
 
             CompanyManagementSystemContext context = new CompanyManagementSystemContext();
-            //context.Database.EnsureDeleted();
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
 
+
+            //Entry in system 
             Console.Write("Enter your username:");
             string name = Console.ReadLine();
 
@@ -36,9 +38,27 @@ namespace CompanyManagementSystem
                 return;
             }
 
+
+            //In own profile
+            Console.WriteLine($"Welcome, {currentEmployee.FirstName} {currentEmployee.LastName}!");
             while (true)
             {
                 //read commmand
+                Console.WriteLine("For your materials: 1, for subordinates 2");
+                string command = Console.ReadLine();
+
+                if(command == "1")
+                {
+                    //TODO
+                }
+                else if (command == "2")
+                {
+                    //TODO
+                }
+                else
+                {
+                    Console.WriteLine("Your choise is invalid! Try again!");
+                }
             }
 
 
