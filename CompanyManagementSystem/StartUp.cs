@@ -49,15 +49,18 @@ namespace CompanyManagementSystem
                 {
                     // If you are in this case you have all permission to do everything to these materials, because they are yours                
                     CommandsInYourOnwMaterials(context, currentEmployee);
+                    Console.WriteLine();
                 }
                 else if (command == "2")
                 {
                     // If you are in this case there is checking the level of permision of materials
-                    CommandsInOtherMaterials(context, currentEmployee);
+                    ComandsInOthersMaterials(context, currentEmployee);
+                    Console.WriteLine();
                 }
                 else if (command.ToLower() == "3")
                 {
                     //In this case you look your colleagues
+                    CommandsForColleagues(context, currentEmployee);
                 }
                 else if (command.ToLower() == "4")
                 {
@@ -65,11 +68,13 @@ namespace CompanyManagementSystem
                     // but withour specific permisions
                     name = "";
                     pass = "";
+                    Console.WriteLine();
                     break;
                 }
                 else
                 {
                     Console.WriteLine("Your choise is invalid! Try again!");
+                    Console.WriteLine();
                 }
 
 
@@ -132,11 +137,12 @@ namespace CompanyManagementSystem
             {
                 Console.WriteLine("Sorry you have not a such material.");
             }
+            context.SaveChanges();
             // check if is possible to change type of this method void?
             return context;
         }
 
-        public static CompanyManagementSystemContext CommandsInOtherMaterials
+        public static CompanyManagementSystemContext ComandsInOthersMaterials
              (CompanyManagementSystemContext context, Employee currentEmployee)
         {
             List<Material> materialOfOtherPeople = context.Materials.Where(m => m.AuthorId != currentEmployee.Id).ToList();
@@ -166,10 +172,60 @@ namespace CompanyManagementSystem
             {
 
             }
-
+            context.SaveChanges();
             return context;
         }
 
+        public static CompanyManagementSystemContext CommandsForColleagues
+             (CompanyManagementSystemContext context, Employee currentEmployee)
+        {
+            List<Employee> colleagues = context.Employees.Where(e => e.Id != currentEmployee.Id).ToList();
+            Console.WriteLine($"Your collegues are: {string.Join(", ", colleagues.Select(c => c.Username))}");
+            Console.WriteLine("If you wanna make some changes type the username of your collegaues:");
+            string usernameOfColleagueToChange = Console.ReadLine();
+            Employee colleagueToChange = colleagues.FirstOrDefault(c => c.Username == usernameOfColleagueToChange);
 
+            if (colleagueToChange != null && currentEmployee.Rank > colleagueToChange.Rank)
+            {
+                Console.WriteLine($"Information about user with username {usernameOfColleagueToChange}:");
+                Console.WriteLine($"Firstname: {colleagueToChange.FirstName}, Lastname: {colleagueToChange.LastName}, Salary: {colleagueToChange.Salary}");
+                Console.WriteLine("To change salary press 1, to fire press 2");
+                string command = Console.ReadLine();
+                if (command == "1")
+                {
+                    Console.WriteLine($"Plese enter the new salary of {colleagueToChange.FirstName} {colleagueToChange.LastName}:");
+                    decimal newSalary = decimal.Parse(Console.ReadLine());
+                    if (newSalary < colleagueToChange.Salary)
+                    {
+                        Console.WriteLine("Are serious? Please enter salary bigger than current! :D");
+                        Console.WriteLine("Plese enter the new salary of this employee:");
+                        newSalary = decimal.Parse(Console.ReadLine());
+                    }
+                    colleagueToChange.ChangeSalary(newSalary);
+                    Console.WriteLine($"Super! ");
+                }
+                else if (command == "2")
+                {
+                    colleagueToChange.IsActiveEmployee = false;
+                    Console.WriteLine($"We just have fired {colleagueToChange.FirstName} {colleagueToChange.LastName}");
+                    // Maybe delete it from DB or ?
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Command");
+                }
+
+            }
+            else if (colleagueToChange != null && currentEmployee.Rank <= colleagueToChange.Rank)
+            {
+                Console.WriteLine("Sorry but you have not permission to make some changes on this person");
+            }
+            else
+            {
+                Console.WriteLine($"In our database there isn't an user with name {usernameOfColleagueToChange}!");
+            }
+            context.SaveChanges();
+            return context;
+        }
     }
 }
