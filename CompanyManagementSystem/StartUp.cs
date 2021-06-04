@@ -89,54 +89,65 @@ namespace CompanyManagementSystem
             (CompanyManagementSystemContext context, Employee currentEmployee)
         {
             List<Material> myMaterials = context.Materials.Where(m => m.AuthorId == currentEmployee.Id).ToList();
-            Console.WriteLine($"You have {myMaterials.Count} materials and they are:");
-            Console.WriteLine(string.Join(", ", myMaterials.Select(m => m.Title)));
-            Console.WriteLine("If you wannt change a material, write the title:");
-            string currentTitleOfMaterialToChnage = Console.ReadLine();
-            Material currentMaterialToChange = myMaterials
-                                            .FirstOrDefault(m => m.Title == currentTitleOfMaterialToChnage);
-            if (currentMaterialToChange != null)
+
+            if (myMaterials.Count != 0)
             {
-                Console.WriteLine("For change the title of this material push 1, for the access level 2");
-                string changeCommand = Console.ReadLine();
-                if (changeCommand == "1")
+                Console.WriteLine($"You have {myMaterials.Count} materials and they are:");
+                Console.WriteLine(string.Join(", ", myMaterials.Select(m => m.Title)));
+                Console.WriteLine("If you wannt change a material, write the title:");
+                string currentTitleOfMaterialToChnage = Console.ReadLine();
+                Material currentMaterialToChange = myMaterials
+                                                .FirstOrDefault(m => m.Title == currentTitleOfMaterialToChnage);
+                if (currentMaterialToChange != null)
                 {
-                    Console.WriteLine("Write the new title of your material");
-                    string newNameOfMaterial = Console.ReadLine();
-                    currentMaterialToChange.Title = newNameOfMaterial;
-                    Console.WriteLine
-                        ($"You successfully change the name of {currentTitleOfMaterialToChnage} to this new name {currentMaterialToChange.Title}");
-                }
-                else if (changeCommand == "2")
-                {
-                    Console.WriteLine("Write the new protection level: private, public, another");
-                    string newLevelOfprotection = Console.ReadLine();
-                    Access newAcces = (Access)Enum.Parse(typeof(Access), newLevelOfprotection, true);
-                    switch (newLevelOfprotection.ToLower())
+                    Console.WriteLine("For change the title of this material push 1, for the access level 2");
+                    string changeCommand = Console.ReadLine();
+                    if (changeCommand == "1")
                     {
-                        case "private":
-                            currentMaterialToChange.Access = newAcces;
-                            break;
-                        case "public":
-                            currentMaterialToChange.Access = newAcces;
-                            break;
-                        //TODO logic here and in the class
-                        case "another":
-                            break;
+                        Console.WriteLine("Write the new title of your material");
+                        string newNameOfMaterial = Console.ReadLine();
+                        currentMaterialToChange.Title = newNameOfMaterial;
+                        Console.WriteLine
+                            ($"You successfully change the name of {currentTitleOfMaterialToChnage} to this new name {currentMaterialToChange.Title}");
                     }
+                    else if (changeCommand == "2")
+                    {
+                        Console.WriteLine("Write the new protection level: private, public, another");
+                        string newLevelOfprotection = Console.ReadLine();
+                        Access newAcces = (Access)Enum.Parse(typeof(Access), newLevelOfprotection, true);
+                        switch (newLevelOfprotection.ToLower())
+                        {
+                            case "private":
+                                currentMaterialToChange.Access = newAcces;
+                                break;
+                            case "public":
+                                currentMaterialToChange.Access = newAcces;
+                                break;
+                            //TODO logic here and in the class
+                            case "another":
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Choose a relevant number:");
+                        //Be carefull with eventually ednless recursion
+                        CommandsInYourOnwMaterials(context, currentEmployee);
+                    }
+
                 }
                 else
                 {
-                    Console.WriteLine("Choose a relevant number:");
-                    //Be carefull with eventually ednless recursion
-                    CommandsInYourOnwMaterials(context, currentEmployee);
+                    Console.WriteLine($"Sorry you have not a material with name {currentTitleOfMaterialToChnage}.");
                 }
-
             }
             else
             {
-                Console.WriteLine("Sorry you have not a such material.");
+                Console.WriteLine("Sorry, but you havn 't any materials!");
             }
+
+
+
             context.SaveChanges();
             // check if is possible to change type of this method void?
             return context;
