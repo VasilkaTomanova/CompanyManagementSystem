@@ -14,6 +14,7 @@ namespace CompanyManagementSystem.Data.Models
             //Initialize the collection correct
             this.OwnMaterials = new HashSet<Material>();
             this.Projects = new HashSet<EmployeesProjects>();
+
         }
         public int Id { get; set; }
 
@@ -27,6 +28,7 @@ namespace CompanyManagementSystem.Data.Models
 
         public decimal Salary { get; set; }
 
+        public int PositionId { get; set; }
         public Position Position { get; set; }
 
         public int Rank { get; set; }       
