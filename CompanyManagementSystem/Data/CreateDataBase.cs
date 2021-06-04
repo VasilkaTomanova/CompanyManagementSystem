@@ -9,7 +9,7 @@ namespace CompanyManagementSystem.Data
 {
   public  class CreateDataBase
     {
-        //This db is for a deo purpose
+        //This db is for a demo purpose
         public  CompanyManagementSystemContext CreateDatabase(CompanyManagementSystemContext context)
         {
             //TODO eventually constructors in classes?
