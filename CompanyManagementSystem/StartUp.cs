@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace CompanyManagementSystem
 {
-  public  class StartUp
+    public class StartUp
     {
         public static void Main(string[] args)
         {
@@ -14,7 +14,6 @@ namespace CompanyManagementSystem
             CompanyManagementSystemContext context = new CompanyManagementSystemContext();
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-
 
 
             //Entry in system 
@@ -44,20 +43,24 @@ namespace CompanyManagementSystem
             while (true)
             {
                 //read commmand
-                Console.WriteLine("For your materials: 1, for subordinates 2");
+                Console.WriteLine("For your materials: 1, for others materials: 2");
                 string command = Console.ReadLine();
 
-                if(command == "1")
+                if (command == "1")
                 {
-                    List<Material> myMaterials = context.Materials.Where(m => m.AuthorId == currentEmployee.Id).ToList();
-                    Console.WriteLine($"You have {myMaterials.Count} materials and they are:");
-                    Console.WriteLine(string.Join(", ", myMaterials.Select(m=>m.Title)));
-                    Console.WriteLine("If you wannt change a material, write the title:");
-                    //TODO
+                    // If you are in this case you have all permission to do everything to these materials, because there yours                
+                    CommandsInYourOnwMaterials(context, currentEmployee);
                 }
                 else if (command == "2")
                 {
+                    // If you are in this case you must check the level of permision of materials
                     //TODO
+                }
+                else if (command.ToLower() == "exit")
+                {
+                    name = "";
+                    pass = "";
+                    break;
                 }
                 else
                 {
@@ -71,5 +74,51 @@ namespace CompanyManagementSystem
 
 
         } // end main
+
+        public static CompanyManagementSystemContext CommandsInYourOnwMaterials
+            (CompanyManagementSystemContext context, Employee currentEmployee)
+        {
+            List<Material> myMaterials = context.Materials.Where(m => m.AuthorId == currentEmployee.Id).ToList();
+            Console.WriteLine($"You have {myMaterials.Count} materials and they are:");
+            Console.WriteLine(string.Join(", ", myMaterials.Select(m => m.Title)));
+            Console.WriteLine("If you wannt change a material, write the title:");
+            string currentTitleOfMaterialToChnage = Console.ReadLine();
+            Material currentMaterialToChange = myMaterials
+                                            .FirstOrDefault(m => m.Title == currentTitleOfMaterialToChnage);
+            if (currentMaterialToChange != null)
+            {
+                Console.WriteLine("For change the title push 1, for the access level 2");
+                string changeCommand = Console.ReadLine();
+                if (changeCommand == "1")
+                {
+                    Console.WriteLine("Write the new title of your material");
+                    string newNameOfMaterial = Console.ReadLine();
+                    currentMaterialToChange.Title = newNameOfMaterial;
+                    Console.WriteLine
+                        ($"You successfully change the name of {currentTitleOfMaterialToChnage} to this new name {currentMaterialToChange.Title}");
+
+                }
+                else if (changeCommand == "2")
+                {
+
+
+                }
+                else
+                {
+
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("Sorry you have not a such material.");
+            }
+            // check if is possible to change type of this method void?
+            return context;
+        }
+
+
+
+
     }
 }
