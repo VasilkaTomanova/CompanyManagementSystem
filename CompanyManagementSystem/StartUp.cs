@@ -12,27 +12,24 @@ namespace CompanyManagementSystem
         {
             //1.Create data base
             CompanyManagementSystemContext context = new CompanyManagementSystemContext();
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
-            CreateDataBase cb = new CreateDataBase();
-            cb.CreateDatabase(context);
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
+            //CreateDataBase cb = new CreateDataBase();
+            //cb.CreateDatabase(context);
 
 
             //2. Entry in system 
-            Console.Write("Enter your username:");
-            string name = Console.ReadLine();
-            List<Employee> employyes = context.Employees.ToList();
-            Employee currentEmployee = employyes.FirstOrDefault(e => e.Username == name);
-            if (currentEmployee == null)
+            Console.WriteLine("Welcome in our Company Managament system! If you alreday registered press 1, if you have NOT any registration press 2");
+            string initialCommand = Console.ReadLine();
+            if (initialCommand == "2")
             {
-                Console.WriteLine("Your username dosn't exist in our system. Sorry, try again later!");
-                return;
+                //not registered
+                RegistrationFrom(context);
             }
-            Console.Write("Enter your pass:");
-            string pass = Console.ReadLine();
-            if (currentEmployee.Password != pass)
+            Employee currentEmployee = LoginInForm(context);
+            if(currentEmployee == null)
             {
-                Console.WriteLine("Your username and password are diffrennt. Sorry, try again later!");
+                Console.WriteLine("Your username or password are inconrrect. Sorry, try again later!");
                 return;
             }
 
@@ -66,8 +63,7 @@ namespace CompanyManagementSystem
                 {
                     // If we have web app we must "delete" the current client information, he still could be in the app
                     // but withour specific permisions
-                    name = "";
-                    pass = "";
+                    currentEmployee = null;
                     Console.WriteLine();
                     break;
                 }
@@ -84,6 +80,67 @@ namespace CompanyManagementSystem
 
 
         } // end main
+
+        public static Employee LoginInForm(CompanyManagementSystemContext context)
+        {
+            Console.Write("Enter your username:");
+            string name = Console.ReadLine();
+            List<Employee> employyes = context.Employees.ToList();
+            Employee currentEmployee = employyes.FirstOrDefault(e => e.Username == name);
+            if (currentEmployee == null)
+            {
+                return null;
+            }
+            Console.Write("Enter your pass:");
+            string pass = Console.ReadLine();
+            if (currentEmployee.Password != pass)
+            {
+                return null;
+            }
+            return currentEmployee;
+        }
+
+
+        public static CompanyManagementSystemContext RegistrationFrom(CompanyManagementSystemContext context)
+        {
+
+            Employee newEmployeeToRegister = new Employee();
+
+            Console.WriteLine("Please enter your username:");
+            string username = Console.ReadLine();
+            //TODO add check if we have already have employye with this username
+            newEmployeeToRegister.Username = username;
+            Console.WriteLine("Please enter your password:");
+            string password = Console.ReadLine();
+            newEmployeeToRegister.Password = password;
+            Console.WriteLine("Please enter your firstname:");
+            string firstName = Console.ReadLine();
+            newEmployeeToRegister.FirstName = firstName;
+            Console.WriteLine("Please enter your lastname:");
+            string lastName = Console.ReadLine();
+            newEmployeeToRegister.LastName = lastName;
+            Console.WriteLine
+                ($"Please choose your relevant position number:{Environment.NewLine}{string.Join(Environment.NewLine, context.Positions.Select(p => p.Id + " " + p.Name))}");
+            int positionId = int.Parse(Console.ReadLine());
+            newEmployeeToRegister.PositionId = positionId;
+
+
+            context.Employees.Add(newEmployeeToRegister);
+            context.SaveChanges();
+            Console.WriteLine("Please wait to add you information to our database");
+            System.Threading.Thread.Sleep(1000); Console.Write(".");
+            System.Threading.Thread.Sleep(1000); Console.Write(".");
+            System.Threading.Thread.Sleep(1000); Console.Write(".");
+            Console.Clear();
+            System.Threading.Thread.Sleep(1000); Console.Write("Loading");
+            System.Threading.Thread.Sleep(1000); Console.Write(".");
+            System.Threading.Thread.Sleep(1000); Console.Write(".");
+            System.Threading.Thread.Sleep(1000); Console.Write(".");
+            Console.WriteLine("You was registered successfully in our database!");
+            Console.WriteLine("You will redirected to login form and you must input your data!");
+            return context;
+        }
+
 
         public static CompanyManagementSystemContext CommandsInYourOnwMaterials
             (CompanyManagementSystemContext context, Employee currentEmployee)
