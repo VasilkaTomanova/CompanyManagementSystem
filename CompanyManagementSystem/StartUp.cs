@@ -62,7 +62,7 @@ namespace CompanyManagementSystem
                 else if (command.ToLower() == "4")
                 {
                     // If we have web app we must "delete" the current client information, he still could be in the app
-                    // but withour specific permisions
+                    // but without specific permisions
                     currentEmployee = null;
                     Console.WriteLine();
                     break;
@@ -124,10 +124,10 @@ namespace CompanyManagementSystem
             int positionId = int.Parse(Console.ReadLine());
             newEmployeeToRegister.PositionId = positionId;
 
-
             context.Employees.Add(newEmployeeToRegister);
             context.SaveChanges();
             Console.WriteLine("Please wait to add you information to our database");
+            //Simulate web loading and connection to server/db :D :D :D
             System.Threading.Thread.Sleep(1000); Console.Write(".");
             System.Threading.Thread.Sleep(1000); Console.Write(".");
             System.Threading.Thread.Sleep(1000); Console.Write(".");
@@ -157,7 +157,7 @@ namespace CompanyManagementSystem
                                                 .FirstOrDefault(m => m.Title == currentTitleOfMaterialToChnage);
                 if (currentMaterialToChange != null)
                 {
-                    Console.WriteLine("For change the title of this material push 1, for the access level 2");
+                    Console.WriteLine("For change the title of this material push 1, for the access level 2, for delete 3");
                     string changeCommand = Console.ReadLine();
                     if (changeCommand == "1")
                     {
@@ -169,21 +169,12 @@ namespace CompanyManagementSystem
                     }
                     else if (changeCommand == "2")
                     {
-                        Console.WriteLine("Write the new protection level: private, public, another");
-                        string newLevelOfprotection = Console.ReadLine();
-                        Access newAcces = (Access)Enum.Parse(typeof(Access), newLevelOfprotection, true);
-                        switch (newLevelOfprotection.ToLower())
-                        {
-                            case "private":
-                                currentMaterialToChange.Access = newAcces;
-                                break;
-                            case "public":
-                                currentMaterialToChange.Access = newAcces;
-                                break;
-                            //TODO logic here and in the class
-                            case "another":
-                                break;
-                        }
+                        ChangeAssessOfMaterial(context, currentEmployee, currentMaterialToChange);
+                    }
+                    else if (changeCommand == "3")
+                    {
+                        context.Materials.Remove(currentMaterialToChange);
+                        Console.WriteLine("The material was deleted!");
                     }
                     else
                     {
@@ -196,24 +187,74 @@ namespace CompanyManagementSystem
                 else
                 {
                     Console.WriteLine($"Sorry you have not a material with name {currentTitleOfMaterialToChnage}.");
+                    
                 }
             }
             else
             {
-                Console.WriteLine("Sorry, but you havn' t any materials!");
+                Console.WriteLine("Sorry, but you havn' t any materials! Do you want add one?");
+                AddNewMaterial(context, currentEmployee);
             }
-
-
-
             context.SaveChanges();
             // check if is possible to change type of this method void?
             return context;
         }
 
+
+        public static void AddNewMaterial(CompanyManagementSystemContext context, Employee currentEmployee)
+        {
+            Material newMaterialToAdd = new Material();
+            newMaterialToAdd.AuthorId = currentEmployee.Id;
+            Console.WriteLine("Please enter the title of your material:");
+            string title = Console.ReadLine();
+            newMaterialToAdd.Title = title;
+            Console.WriteLine("Please enter the URL of your material:");
+            string url = Console.ReadLine();
+            newMaterialToAdd.Url = url;
+            ChangeAssessOfMaterial(context, currentEmployee, newMaterialToAdd); 
+            context.Materials.Add(newMaterialToAdd);
+            context.SaveChanges();
+            Console.WriteLine($"Congratulations, {currentEmployee.Username}! You successfully added a new material to your documents! ");
+        }
+
+        public static CompanyManagementSystemContext ChangeAssessOfMaterial
+            (CompanyManagementSystemContext context, Employee currentEmployee, Material material)
+        {
+            Console.WriteLine("Please enter the level of access of your material: 1 for private, 2 for public, 3 for another:");
+            string accessLevel = Console.ReadLine();
+            switch (accessLevel)
+            {
+                case "1":
+                    material.Access = (Access)Enum.Parse(typeof(Access), "Private", true);
+                    break;
+                case "2":
+                    material.Access = (Access)Enum.Parse(typeof(Access), "Public", true);
+                    break;
+                case "3":
+                    material.Access = (Access)Enum.Parse(typeof(Access), "Another", true);
+                    List<Employee> othersEmployees = context.Employees.Where(e => e.Id != currentEmployee.Id).ToList();
+                    Console.WriteLine("Please enter id numbers of your colleagues to give them permission:");
+                    Console.WriteLine(string.Join(Environment.NewLine, othersEmployees.Select(e => e.Id + " " + e.Username)));
+                    int numberOfColleagues = 3;
+                    while (numberOfColleagues-- > 0)
+                    {
+                        int currentIdToGivePermission = int.Parse(Console.ReadLine());
+                        material.ChangeAccess(currentIdToGivePermission);
+                    }
+                    Console.WriteLine($"You successfully give permision to some of your collegues");
+                    break;
+            }
+            context.SaveChanges();
+            return context;
+        }
+
+
         public static CompanyManagementSystemContext ComandsInOthersMaterials
              (CompanyManagementSystemContext context, Employee currentEmployee)
         {
-            List<Material> materialOfOtherPeople = context.Materials.Where(m => m.AuthorId != currentEmployee.Id).ToList();
+            List<Material> materialOfOtherPeople = context.Materials
+                                                    .Where(m => m.AuthorId != currentEmployee.Id)
+                                                    .ToList();
             Console.WriteLine($"In our system we have these materials: {string.Join(", ", materialOfOtherPeople.Select(m => m.Title))}");
             Console.WriteLine("If you wanna see details of a material, please write its name:");
             string title = Console.ReadLine();
@@ -278,7 +319,7 @@ namespace CompanyManagementSystem
             {
                 Console.WriteLine($"Information about user with username {usernameOfColleagueToChange}:");
                 Console.WriteLine($"Firstname: {colleagueToChange.FirstName}, Lastname: {colleagueToChange.LastName}, Salary: {colleagueToChange.Salary}");
-                Console.WriteLine("To change salary press 1, to fire press 2");
+                Console.WriteLine("To change salary press 1, to fire press 2, to continue without change press 3");
                 string command = Console.ReadLine();
                 if (command == "1")
                 {
@@ -299,9 +340,13 @@ namespace CompanyManagementSystem
                     Console.WriteLine($"We just have fired {colleagueToChange.FirstName} {colleagueToChange.LastName}");
                     // Maybe delete it from DB or ?
                 }
+                else if (command == "3")
+                {
+                    Console.WriteLine("No changes");
+                }
                 else
                 {
-                    Console.WriteLine("Invalid Command");
+                    Console.WriteLine("Invalid command");
                 }
 
             }
