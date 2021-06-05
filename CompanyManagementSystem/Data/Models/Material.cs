@@ -9,9 +9,11 @@ namespace CompanyManagementSystem.Data.Models
 {
     public class Material
     {
+        private List<int> idsWithAccessToMyMaterials;
+
         public Material()
         {
-            this.IdsWithAccessToMyMaterials = new List<int>();
+            this.idsWithAccessToMyMaterials = new List<int>();
         }
 
         [Required]
@@ -28,11 +30,11 @@ namespace CompanyManagementSystem.Data.Models
         [Required]
         public string Url { get; set; }
 
-        public List<int> IdsWithAccessToMyMaterials;
+
         //TODO
         public void ChangeAccess(int id)
         {
-            this.IdsWithAccessToMyMaterials.Add(id);
+            this.idsWithAccessToMyMaterials.Add(id);
 
         }
 
