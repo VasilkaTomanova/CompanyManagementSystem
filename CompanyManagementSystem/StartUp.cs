@@ -33,7 +33,6 @@ namespace CompanyManagementSystem
                 return;
             }
 
-
             //3. In own profile - do something while reading commands from console
             Console.WriteLine($"Welcome, {currentEmployee.FirstName} {currentEmployee.LastName}!");
             while (true)
@@ -72,8 +71,6 @@ namespace CompanyManagementSystem
                     Console.WriteLine("Your choise is invalid! Try again!");
                     Console.WriteLine();
                 }
-
-
 
             } // end while
             Console.WriteLine("Bye!");
