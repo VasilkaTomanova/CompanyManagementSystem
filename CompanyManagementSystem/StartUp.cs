@@ -131,11 +131,11 @@ namespace CompanyManagementSystem
             System.Threading.Thread.Sleep(1000); Console.Write(".");
             System.Threading.Thread.Sleep(1000); Console.Write(".");
             System.Threading.Thread.Sleep(1000); Console.Write(".");
-            Console.Clear();
             System.Threading.Thread.Sleep(1000); Console.Write("Loading");
             System.Threading.Thread.Sleep(1000); Console.Write(".");
             System.Threading.Thread.Sleep(1000); Console.Write(".");
             System.Threading.Thread.Sleep(1000); Console.Write(".");
+            Console.Clear();
             Console.WriteLine("You was registered successfully in our database!");
             Console.WriteLine("You will redirected to login form and you must input your data!");
             return context;
@@ -252,6 +252,7 @@ namespace CompanyManagementSystem
         public static CompanyManagementSystemContext ComandsInOthersMaterials
              (CompanyManagementSystemContext context, Employee currentEmployee)
         {
+           
             List<Material> materialOfOtherPeople = context.Materials
                                                     .Where(m => m.AuthorId != currentEmployee.Id)
                                                     .ToList();
