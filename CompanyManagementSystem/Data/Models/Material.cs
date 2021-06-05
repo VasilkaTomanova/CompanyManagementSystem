@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 
 namespace CompanyManagementSystem.Data.Models
 {
-  public class Material
+    public class Material
     {
-        private List<int> idsWithAccessToMyMaterials;
-
         public Material()
         {
-            this.idsWithAccessToMyMaterials = new List<int>();
+            this.IdsWithAccessToMyMaterials = new List<int>();
         }
 
+        [Required]
         public string Title { get; set; }
         public int Id { get; set; }
 
@@ -23,15 +22,18 @@ namespace CompanyManagementSystem.Data.Models
         public int AuthorId { get; set; }
         public Employee Author { get; set; }
 
+        [Required]
         public Access Access { get; set; }
 
+        [Required]
         public string Url { get; set; }
 
-        
+        public List<int> IdsWithAccessToMyMaterials;
         //TODO
-        public void ChangeAccess()
+        public void ChangeAccess(int id)
         {
-            //this.idsWithAccessToMyMaterials.Clear();
+            this.IdsWithAccessToMyMaterials.Add(id);
+
         }
 
 
