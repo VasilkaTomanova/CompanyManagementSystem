@@ -17,7 +17,6 @@ namespace CompanyManagementSystem
             //CreateDataBase cb = new CreateDataBase();
             //cb.CreateDatabase(context);
 
-
             //2. Entry in system 
             Console.WriteLine("Welcome in our Company Managament system! If you alreday registered press 1, if you have NOT any registration press 2");
             string initialCommand = Console.ReadLine();
@@ -35,8 +34,17 @@ namespace CompanyManagementSystem
 
             //3. In own profile - do something while reading commands from console
             Console.WriteLine($"Welcome, {currentEmployee.FirstName} {currentEmployee.LastName}!");
+            int counterToClearConsole = 0;
             while (true)
             {
+                if(counterToClearConsole++ > 4)
+                {
+                    System.Threading.Thread.Sleep(1000);
+                    Console.WriteLine("Waiting...Disinfection...");
+                    System.Threading.Thread.Sleep(1000);
+                    Console.Clear();
+                    counterToClearConsole = 0;
+                }
                 //read commmand
                 Console.WriteLine("For your own materials: 1, for materials of other people: 2, to see the list of your colleagues: 3, for exit: 4");
                 string command = Console.ReadLine();
@@ -97,10 +105,8 @@ namespace CompanyManagementSystem
             return currentEmployee;
         }
 
-
         public static CompanyManagementSystemContext RegistrationFrom(CompanyManagementSystemContext context)
         {
-
             Employee newEmployeeToRegister = new Employee();
             Console.WriteLine("Please enter your username:");
             string username = Console.ReadLine();
@@ -119,11 +125,16 @@ namespace CompanyManagementSystem
                 ($"Please choose your relevant position number:{Environment.NewLine}{string.Join(Environment.NewLine, context.Positions.Select(p => p.Id + " " + p.Name))}");
             int positionId = int.Parse(Console.ReadLine());
             newEmployeeToRegister.PositionId = positionId;
-
             context.Employees.Add(newEmployeeToRegister);
             context.SaveChanges();
-            Console.WriteLine("Please wait to add you information to our database");
             //Simulate web loading and connection to server/db :D :D :D
+            SimulateDataLoading();
+            return context;
+        }
+
+        private static void SimulateDataLoading()
+        {
+            Console.WriteLine("Please wait to add your information to our database");
             System.Threading.Thread.Sleep(1000); Console.Write(".");
             System.Threading.Thread.Sleep(1000); Console.Write(".");
             System.Threading.Thread.Sleep(1000); Console.Write(".");
@@ -131,12 +142,13 @@ namespace CompanyManagementSystem
             System.Threading.Thread.Sleep(1000); Console.Write(".");
             System.Threading.Thread.Sleep(1000); Console.Write(".");
             System.Threading.Thread.Sleep(1000); Console.Write(".");
+            System.Threading.Thread.Sleep(500);
             Console.Clear();
             Console.WriteLine("You was registered successfully in our database!");
             Console.WriteLine("You will redirected to login form and you must input your data!");
-            return context;
+            System.Threading.Thread.Sleep(4500);
+            Console.Clear();
         }
-
 
         public static CompanyManagementSystemContext CommandsInYourOnwMaterials
             (CompanyManagementSystemContext context, Employee currentEmployee)
