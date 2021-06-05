@@ -14,7 +14,6 @@ namespace CompanyManagementSystem.Data.Models
             //Initialize the collection correct
             this.OwnMaterials = new HashSet<Material>();
             this.Projects = new HashSet<EmployeesProjects>();
-
         }
         public int Id { get; set; }
 
