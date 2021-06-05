@@ -18,15 +18,32 @@ namespace CompanyManagementSystem.Data.Models
         }
         public int Id { get; set; }
 
+        [Required]
+        //[MinLength(3)]
+        //[MaxLength(15)]
+        [RegularExpression(@"[A-Z][a-z]{2,15}")]
         public string FirstName { get; set; }
 
+        [Required]
+        //[MinLength(3)]
+        //[MaxLength(15)]
+        [RegularExpression(@"[A-Z][a-z]{2,15}")]
         public string LastName { get; set; }
 
+        [Required]
+        [MinLength(3)]
+        [MaxLength(15)]
         public string Username { get; set; }
 
+        [Required]
+        [MinLength(3)]
+        [MaxLength(15)]
         public string Password { get; set; }
 
-        public decimal Salary { get; set; }
+       
+        public decimal? Salary { get; set; }
+   
+
 
         public int PositionId { get; set; }
         public Position Position { get; set; }
