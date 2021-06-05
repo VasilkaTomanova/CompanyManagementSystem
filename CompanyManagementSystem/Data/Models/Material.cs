@@ -32,13 +32,24 @@ namespace CompanyManagementSystem.Data.Models
 
 
         //TODO
-        public void ChangeAccess(int id)
+        public void GiveAccess(int id)
         {
             this.idsWithAccessToMyMaterials.Add(id);
-
         }
 
+        public void RemoveAccess()
+        {
+            this.idsWithAccessToMyMaterials.Clear();
+        }
 
+        public bool CheckAccess(int otherId)
+        {
+            if(this.idsWithAccessToMyMaterials.Contains(otherId))
+            {
+                return true;
+            }
+            return false;
+        }
 
 
     }
