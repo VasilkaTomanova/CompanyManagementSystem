@@ -49,29 +49,19 @@ namespace CompanyManagementSystem.Data.Models
 
         public int Rank { get; set; }       
 
-
-       
         public int? ManagerId { get; set; }
         public Employee Manager { get; set; }
 
-
-
-
-        //TODO
         public bool IsActiveEmployee { get; set; }
 
-        //TODO
         public ICollection<Material> OwnMaterials { get; set; }
 
         public ICollection<EmployeesProjects> Projects { get; set; }
 
 
-        //Could make with persantage or -=sum
         public void ChangeSalary(decimal newSalary)
         {
-
             this.Salary = newSalary;
-
         }
 
     }
