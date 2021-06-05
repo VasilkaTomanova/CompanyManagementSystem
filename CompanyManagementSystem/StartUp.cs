@@ -105,7 +105,6 @@ namespace CompanyManagementSystem
         {
 
             Employee newEmployeeToRegister = new Employee();
-
             Console.WriteLine("Please enter your username:");
             string username = Console.ReadLine();
             //TODO add check if we have already have employye with this username
@@ -157,37 +156,11 @@ namespace CompanyManagementSystem
                                                 .FirstOrDefault(m => m.Title == currentTitleOfMaterialToChnage);
                 if (currentMaterialToChange != null)
                 {
-                    Console.WriteLine("For change the title of this material push 1, for the access level 2, for delete 3");
-                    string changeCommand = Console.ReadLine();
-                    if (changeCommand == "1")
-                    {
-                        Console.WriteLine("Write the new title of your material:");
-                        string newNameOfMaterial = Console.ReadLine();
-                        currentMaterialToChange.Title = newNameOfMaterial;
-                        Console.WriteLine
-                            ($"You successfully change the name of {currentTitleOfMaterialToChnage} to this new name {currentMaterialToChange.Title}");
-                    }
-                    else if (changeCommand == "2")
-                    {
-                        ChangeAssessOfMaterial(context, currentEmployee, currentMaterialToChange);
-                    }
-                    else if (changeCommand == "3")
-                    {
-                        context.Materials.Remove(currentMaterialToChange);
-                        Console.WriteLine("The material was deleted!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Choose a relevant number:");
-                        //Be carefull with eventually ednless recursion
-                        CommandsInYourOnwMaterials(context, currentEmployee);
-                    }
-
+                    ChangeYourOwnMaterial(context, currentEmployee, currentTitleOfMaterialToChnage, currentMaterialToChange);
                 }
                 else
                 {
                     Console.WriteLine($"Sorry you have not a material with name {currentTitleOfMaterialToChnage}.");
-
                 }
             }
             else
@@ -200,6 +173,34 @@ namespace CompanyManagementSystem
             return context;
         }
 
+        private static void ChangeYourOwnMaterial(CompanyManagementSystemContext context, Employee currentEmployee, string currentTitleOfMaterialToChnage, Material currentMaterialToChange)
+        {
+            Console.WriteLine("For change the title of this material push 1, for the access level 2, for delete 3");
+            string changeCommand = Console.ReadLine();
+            if (changeCommand == "1")
+            {
+                Console.WriteLine("Write the new title of your material:");
+                string newNameOfMaterial = Console.ReadLine();
+                currentMaterialToChange.Title = newNameOfMaterial;
+                Console.WriteLine
+                    ($"You successfully change the name of {currentTitleOfMaterialToChnage} to this new name {currentMaterialToChange.Title}");
+            }
+            else if (changeCommand == "2")
+            {
+                ChangeAssessOfMaterial(context, currentEmployee, currentMaterialToChange);
+            }
+            else if (changeCommand == "3")
+            {
+                context.Materials.Remove(currentMaterialToChange);
+                Console.WriteLine("The material was deleted!");
+            }
+            else
+            {
+                Console.WriteLine("Choose a relevant number:");
+                //Be carefull with eventually ednless recursion
+                CommandsInYourOnwMaterials(context, currentEmployee);
+            }
+        }
 
         public static void AddNewMaterial(CompanyManagementSystemContext context, Employee currentEmployee)
         {
@@ -272,7 +273,7 @@ namespace CompanyManagementSystem
                 if (materialLookingFor.Access.ToString() == "Public")
                 {
                     Console.WriteLine("This document is public. You can manage it:");
-                    ChangeMaterial(title, materialLookingFor);
+                    ChangeMaterialOfOtherPerson(title, materialLookingFor);
                 }
                 else if (materialLookingFor.Access.ToString() == "Private")
                 {
@@ -284,7 +285,7 @@ namespace CompanyManagementSystem
                     if (materialLookingFor.CheckAccess(currentEmployee.Id))
                     {
                         Console.WriteLine("Your id has permission for this document. You can manage it:");
-                        ChangeMaterial(title, materialLookingFor);
+                        ChangeMaterialOfOtherPerson(title, materialLookingFor);
                     }
                     else
                     {
@@ -302,7 +303,7 @@ namespace CompanyManagementSystem
             return context;
         }
 
-        private static void ChangeMaterial(string title, Material materialLookingFor)
+        private static void ChangeMaterialOfOtherPerson(string title, Material materialLookingFor)
         {
             Console.WriteLine($"Details: Title {materialLookingFor.Title} with Author {materialLookingFor.Author.FirstName} {materialLookingFor.Author.LastName} and address {materialLookingFor.Url}");
             Console.WriteLine("For change title press 1, for url address press 2:");
