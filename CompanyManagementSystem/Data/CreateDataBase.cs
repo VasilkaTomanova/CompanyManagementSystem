@@ -48,17 +48,17 @@ namespace CompanyManagementSystem.Data
             context.SaveChanges();
 
             Material material1 = new Material();
-            material1.Title = "Iron candle"; material1.AuthorId = 1;
+            material1.Title = "Iron candle"; material1.AuthorId = 1; material1.Url = "url1";
             material1.Access = (Access)Enum.Parse(typeof(Access), "Public", true);
             Material material2 = new Material();
-            material2.Title = "No title"; material2.AuthorId = 1;
+            material2.Title = "No title"; material2.AuthorId = 1; material2.Url = "url2";
             material2.Access = (Access)Enum.Parse(typeof(Access), "Private", true);
             Material material3 = new Material();
-            material3.Title = "Title"; material3.AuthorId = 1;
+            material3.Title = "Title"; material3.AuthorId = 1; material3.Url = "url3";
             material3.Access = (Access)Enum.Parse(typeof(Access), "Public", true);
             Material material4 = new Material();
             material4.Access = (Access)Enum.Parse(typeof(Access), "Another", true);
-            material4.Title = "Material 3"; material4.AuthorId = 2;
+            material4.Title = "Material 3"; material4.AuthorId = 2; material4.Url = "url4";
             context.Materials.Add(material1);
             context.Materials.Add(material2);
             context.Materials.Add(material3);
