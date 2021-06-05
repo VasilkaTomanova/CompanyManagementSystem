@@ -12,10 +12,10 @@ namespace CompanyManagementSystem
         {
             //1.Create data base
             CompanyManagementSystemContext context = new CompanyManagementSystemContext();
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
-            CreateDataBase cb = new CreateDataBase();
-            cb.CreateDatabase(context);
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
+            //CreateDataBase cb = new CreateDataBase();
+            //cb.CreateDatabase(context);
 
 
             //2. Entry in system 
@@ -226,6 +226,7 @@ namespace CompanyManagementSystem
             {
                 case "1":
                     material.Access = (Access)Enum.Parse(typeof(Access), "Private", true);
+                    material.RemoveAccess();
                     break;
                 case "2":
                     material.Access = (Access)Enum.Parse(typeof(Access), "Public", true);
@@ -239,7 +240,7 @@ namespace CompanyManagementSystem
                     while (numberOfColleagues-- > 0)
                     {
                         int currentIdToGivePermission = int.Parse(Console.ReadLine());
-                        material.ChangeAccess(currentIdToGivePermission);
+                        material.GiveAccess(currentIdToGivePermission);
                     }
                     Console.WriteLine($"You successfully give permision to some of your collegues");
                     break;
@@ -253,7 +254,7 @@ namespace CompanyManagementSystem
              (CompanyManagementSystemContext context, Employee currentEmployee)
         {
             List<Material> m1 = context.Materials
-                      
+
                          .ToList();
 
             List<Material> materialOfOtherPeople = context.Materials
@@ -271,27 +272,7 @@ namespace CompanyManagementSystem
                 if (materialLookingFor.Access.ToString() == "Public")
                 {
                     Console.WriteLine("This document is public. You can manage it:");
-                    Console.WriteLine($"Details: Title {materialLookingFor.Title} with Author {materialLookingFor.Author.FirstName} {materialLookingFor.Author.LastName} and address {materialLookingFor.Url}");
-                    Console.WriteLine("For change title press 1, for url address press 2:");
-                    string command = Console.ReadLine();
-                    if (command == "1")
-                    {
-                        Console.WriteLine("PLease enter the new title of this document:");
-                        string newNameOfDoc = Console.ReadLine();
-                        materialLookingFor.Title = newNameOfDoc;
-                        Console.WriteLine($"You change the title ot {title} with this one {materialLookingFor.Title}");
-                    }
-                    else if (command == "2")
-                    {
-                        Console.WriteLine("PLease enter the new url of this document:");
-                        string newAddressOfDoc = Console.ReadLine();
-                        materialLookingFor.Url = newAddressOfDoc;
-                        Console.WriteLine($"You change the url to {materialLookingFor.Url}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid command");
-                    }
+                    ChangeMaterial(title, materialLookingFor);
                 }
                 else if (materialLookingFor.Access.ToString() == "Private")
                 {
@@ -299,8 +280,18 @@ namespace CompanyManagementSystem
                 }
                 else
                 {
-                    Console.WriteLine("Still working on this feature \"manage documents\"");
-                    //TODO logic if myId is in the list with eligible id
+                    //Another
+                    if (materialLookingFor.CheckAccess(currentEmployee.Id))
+                    {
+                        Console.WriteLine("Your id has permission for this document. You can manage it:");
+                        ChangeMaterial(title, materialLookingFor);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Sorry, this document is private for you, and you can see only the title.");
+                    }
+
+
                 }
             }
             else
@@ -309,6 +300,31 @@ namespace CompanyManagementSystem
             }
             context.SaveChanges();
             return context;
+        }
+
+        private static void ChangeMaterial(string title, Material materialLookingFor)
+        {
+            Console.WriteLine($"Details: Title {materialLookingFor.Title} with Author {materialLookingFor.Author.FirstName} {materialLookingFor.Author.LastName} and address {materialLookingFor.Url}");
+            Console.WriteLine("For change title press 1, for url address press 2:");
+            string command = Console.ReadLine();
+            if (command == "1")
+            {
+                Console.WriteLine("PLease enter the new title of this document:");
+                string newNameOfDoc = Console.ReadLine();
+                materialLookingFor.Title = newNameOfDoc;
+                Console.WriteLine($"You change the title ot {title} with this one {materialLookingFor.Title}");
+            }
+            else if (command == "2")
+            {
+                Console.WriteLine("PLease enter the new url of this document:");
+                string newAddressOfDoc = Console.ReadLine();
+                materialLookingFor.Url = newAddressOfDoc;
+                Console.WriteLine($"You change the url to {materialLookingFor.Url}");
+            }
+            else
+            {
+                Console.WriteLine("Invalid command");
+            }
         }
 
         public static CompanyManagementSystemContext CommandsForColleagues
