@@ -12,10 +12,10 @@ namespace CompanyManagementSystem
         {
             //1.Create data base
             CompanyManagementSystemContext context = new CompanyManagementSystemContext();
-            //context.Database.EnsureDeleted();
-            //context.Database.EnsureCreated();
-            //CreateDataBase cb = new CreateDataBase();
-            //cb.CreateDatabase(context);
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+            CreateDataBase cb = new CreateDataBase();
+            cb.CreateDatabase(context);
 
 
             //2. Entry in system 
@@ -27,7 +27,7 @@ namespace CompanyManagementSystem
                 RegistrationFrom(context);
             }
             Employee currentEmployee = LoginInForm(context);
-            if(currentEmployee == null)
+            if (currentEmployee == null)
             {
                 Console.WriteLine("Your username or password are inconrrect. Sorry, try again later!");
                 return;
@@ -187,7 +187,7 @@ namespace CompanyManagementSystem
                 else
                 {
                     Console.WriteLine($"Sorry you have not a material with name {currentTitleOfMaterialToChnage}.");
-                    
+
                 }
             }
             else
@@ -211,7 +211,7 @@ namespace CompanyManagementSystem
             Console.WriteLine("Please enter the URL of your material:");
             string url = Console.ReadLine();
             newMaterialToAdd.Url = url;
-            ChangeAssessOfMaterial(context, currentEmployee, newMaterialToAdd); 
+            ChangeAssessOfMaterial(context, currentEmployee, newMaterialToAdd);
             context.Materials.Add(newMaterialToAdd);
             context.SaveChanges();
             Console.WriteLine($"Congratulations, {currentEmployee.Username}! You successfully added a new material to your documents! ");
@@ -252,10 +252,14 @@ namespace CompanyManagementSystem
         public static CompanyManagementSystemContext ComandsInOthersMaterials
              (CompanyManagementSystemContext context, Employee currentEmployee)
         {
-           
+            List<Material> m1 = context.Materials
+                      
+                         .ToList();
+
             List<Material> materialOfOtherPeople = context.Materials
-                                                    .Where(m => m.AuthorId != currentEmployee.Id)
-                                                    .ToList();
+                          .Where(m => m.AuthorId != currentEmployee.Id)
+                          .ToList();
+
             Console.WriteLine($"In our system we have these materials: {string.Join(", ", materialOfOtherPeople.Select(m => m.Title))}");
             Console.WriteLine("If you wanna see details of a material, please write its name:");
             string title = Console.ReadLine();
