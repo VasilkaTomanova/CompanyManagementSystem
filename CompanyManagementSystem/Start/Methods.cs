@@ -143,7 +143,8 @@ namespace CompanyManagementSystem.Start
                 }
                 else
                 {
-                    Console.WriteLine($"Sorry you have not a material with name {currentTitleOfMaterialToChnage}.");
+                    Console.WriteLine($"Sorry you have not a material with name {currentTitleOfMaterialToChnage}. Do you want to create it?");
+                    AddNewMaterial(context, currentEmployee);
                 }
             }
             else
