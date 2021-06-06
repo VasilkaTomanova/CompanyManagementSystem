@@ -24,6 +24,7 @@ namespace CompanyManagementSystem.Start
                 bool successfullRegistration = this.method.RegistrationFrom(this.context);
                 if (successfullRegistration == false)
                 {
+                    Console.WriteLine("Unsuccessfull registration! Try later!");
                     return;
                 }
             }
