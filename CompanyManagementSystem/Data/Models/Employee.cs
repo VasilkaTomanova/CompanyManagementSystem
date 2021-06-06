@@ -96,7 +96,7 @@ namespace CompanyManagementSystem.Data.Models
         private bool ValidateUsername(string stringToValidate)
         {
             Match match = this.usernameRegex.Match(stringToValidate);
-            if (match != null)
+            if (match.Length != 0)
             {
                 return true;
             }
@@ -107,7 +107,7 @@ namespace CompanyManagementSystem.Data.Models
         private bool ValidatePassowrd(string stringToValidate)
         {
             Match match = this.passowrdRegex.Match(stringToValidate);
-            if (match != null)
+            if (match.Length != 0)
             {
                 return true;
             }
