@@ -6,8 +6,11 @@ using System.Linq;
 
 namespace CompanyManagementSystem.Start
 {
+   
     public class Methods
     {
+        private const int minLenghtOfString = 3;
+        private const int maxLength = 15;
         public void ClearTheConsole()
         {
             System.Threading.Thread.Sleep(1000);
@@ -39,7 +42,7 @@ namespace CompanyManagementSystem.Start
         public bool RegistrationFrom(CompanyManagementSystemContext context)
         {
             Employee newEmployeeToRegister = new Employee();
-            Console.WriteLine("Please enter your username:");
+            Console.WriteLine($"Please enter your username! Minimal lenght: {minLenghtOfString} symbols, maximum lenght {maxLength} symbols");
             int counterOfEligible = 3;
             bool thisUserNameExistInDatabase = false;
             string username = "";
@@ -53,7 +56,7 @@ namespace CompanyManagementSystem.Start
                 }
                 else
                 {
-                    thisUserNameExistInDatabase = false;
+                    thisUserNameExistInDatabase = false; break;
                 }
             }
 
@@ -63,24 +66,33 @@ namespace CompanyManagementSystem.Start
                 return false;
             }
 
-            newEmployeeToRegister.Username = username;
-            Console.WriteLine("Please enter your password:");
-            string password = Console.ReadLine();
-            newEmployeeToRegister.Password = password;
-            Console.WriteLine("Please enter your firstname:");
-            string firstName = Console.ReadLine();
-            newEmployeeToRegister.FirstName = firstName;
-            Console.WriteLine("Please enter your lastname:");
-            string lastName = Console.ReadLine();
-            newEmployeeToRegister.LastName = lastName;
-            Console.WriteLine
-                ($"Please choose your relevant position number:{Environment.NewLine}{string.Join(Environment.NewLine, context.Positions.Select(p => p.Id + " " + p.Name))}");
-            int positionId = int.Parse(Console.ReadLine());
-            newEmployeeToRegister.PositionId = positionId;
-            context.Employees.Add(newEmployeeToRegister);
-            context.SaveChanges();
-            //Simulate web loading and connection to server/db :D :D :D
-            SimulateDataLoading();
+            
+            try
+            {
+                newEmployeeToRegister.Username = username;
+                Console.WriteLine("Please enter your password. It must bewtween 4 and four 8 sumbols. Must contain at least one lower letter, one upper letter and one digit!");
+                string password = Console.ReadLine();
+                newEmployeeToRegister.Password = password;
+                Console.WriteLine("Please enter your firstname:");
+                string firstName = Console.ReadLine();
+                newEmployeeToRegister.FirstName = firstName;
+                Console.WriteLine("Please enter your lastname:");
+                string lastName = Console.ReadLine();
+                newEmployeeToRegister.LastName = lastName;
+                Console.WriteLine
+                    ($"Please choose your relevant position number:{Environment.NewLine}{string.Join(Environment.NewLine, context.Positions.Select(p => p.Id + " " + p.Name))}");
+                int positionId = int.Parse(Console.ReadLine());
+                newEmployeeToRegister.PositionId = positionId;
+                context.Employees.Add(newEmployeeToRegister);
+                context.SaveChanges();
+                //Simulate web loading and connection to server/db :D :D :D
+                SimulateDataLoading();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+               
+            }
             return true;
         }
 
