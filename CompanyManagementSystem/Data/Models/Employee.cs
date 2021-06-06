@@ -13,7 +13,7 @@ namespace CompanyManagementSystem.Data.Models
         //private const int minLenghtOfString = 3;
         //private const int maxLength = 15;
 
-        private const string usernamePattern = @"[a-z]{3,15}";
+        private const string usernamePattern = @"^[a-z]{3,15}$";
         private readonly Regex usernameRegex;
 
         private const string passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{4,8}$";
