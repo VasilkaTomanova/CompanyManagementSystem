@@ -8,17 +8,21 @@ using System.Threading.Tasks;
 
 namespace CompanyManagementSystem.Start
 {
-  public  class Engine
+    public class Engine
     {
 
-        public void Run (CompanyManagementSystemContext context)
+        public void Run(CompanyManagementSystemContext context)
         {
             Console.WriteLine("Welcome in our Company Managament system! If you alreday registered press 1, if you have NOT any registration press 2");
             string initialCommand = Console.ReadLine();
             if (initialCommand == "2")
             {
                 //not registered
-                RegistrationFrom(context);
+                bool successfullRegistration = RegistrationFrom(context);
+                if (successfullRegistration == false)
+                {
+                    return;
+                }
             }
             Employee currentEmployee = LoginInForm(context);
             if (currentEmployee == null)
@@ -34,11 +38,7 @@ namespace CompanyManagementSystem.Start
             {
                 if (counterToClearConsole++ > 2)
                 {
-                    System.Threading.Thread.Sleep(1000);
-                    Console.WriteLine("Waiting...Disinfection...");
-                    System.Threading.Thread.Sleep(3000);
-                    Console.Clear();
-                    System.Threading.Thread.Sleep(1000);
+                    ClearTheConsole();
                     counterToClearConsole = 0;
                 }
                 //read commmand
@@ -80,6 +80,15 @@ namespace CompanyManagementSystem.Start
             Console.WriteLine("Bye!");
         }
 
+        private static void ClearTheConsole()
+        {
+            System.Threading.Thread.Sleep(1000);
+            Console.WriteLine("Waiting...Disinfection...");
+            System.Threading.Thread.Sleep(3000);
+            Console.Clear();
+            System.Threading.Thread.Sleep(1000);
+        }
+
         public static Employee LoginInForm(CompanyManagementSystemContext context)
         {
             Console.Write("Enter your username:");
@@ -99,12 +108,33 @@ namespace CompanyManagementSystem.Start
             return currentEmployee;
         }
 
-        public static CompanyManagementSystemContext RegistrationFrom(CompanyManagementSystemContext context)
+        public static bool RegistrationFrom(CompanyManagementSystemContext context)
         {
             Employee newEmployeeToRegister = new Employee();
             Console.WriteLine("Please enter your username:");
-            string username = Console.ReadLine();
-            //TODO add check if we have already have employye with this username
+            int counterOfEligible = 3;
+            bool thisUserNameExistInDatabase = false;
+            string username = "";
+            while (counterOfEligible-- > 0)
+            {
+                 username = Console.ReadLine();
+                thisUserNameExistInDatabase = CheckThisUsernameExistInDatabase(context, username);
+                if (thisUserNameExistInDatabase == true)
+                {
+                    Console.WriteLine("This username is NOT free! Try again");
+                } 
+                else
+                {
+                    thisUserNameExistInDatabase = false;
+                }
+            }
+
+            if (thisUserNameExistInDatabase == true)
+            {
+                Console.WriteLine("Sorry you have try a lot ot times!");
+                return false;
+            }
+
             newEmployeeToRegister.Username = username;
             Console.WriteLine("Please enter your password:");
             string password = Console.ReadLine();
@@ -123,8 +153,21 @@ namespace CompanyManagementSystem.Start
             context.SaveChanges();
             //Simulate web loading and connection to server/db :D :D :D
             SimulateDataLoading();
-            return context;
+            return true;
         }
+
+
+        private static bool CheckThisUsernameExistInDatabase(CompanyManagementSystemContext context, string currentUserNameToCheck)
+        {
+            if (context.Employees.Any(x=>x.Username.ToLower() == currentUserNameToCheck.ToLower()))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
 
         private static void SimulateDataLoading()
         {
