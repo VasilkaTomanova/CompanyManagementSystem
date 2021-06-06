@@ -61,12 +61,12 @@ namespace CompanyManagementSystem.Start
                     this.method.ComandsInOthersMaterials(this.context, currentEmployee);
                     Console.WriteLine();
                 }
-                else if (command.ToLower() == "3")
+                else if (command == "3")
                 {
                     //In this case you look your colleagues
                     this.method.CommandsForColleagues(this.context, currentEmployee);
                 }
-                else if (command.ToLower() == "4")
+                else if (command == "4")
                 {
                     // If we have web app we must "delete" the current client information, he still could be in the app
                     // but without specific permisions
