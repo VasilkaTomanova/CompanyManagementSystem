@@ -42,7 +42,7 @@ namespace CompanyManagementSystem.Start
         public bool RegistrationFrom(CompanyManagementSystemContext context)
         {
             Employee newEmployeeToRegister = new Employee();
-            Console.WriteLine($"Please enter your username! Minimal lenght: {minLenghtOfString} symbols, maximum lenght {maxLength} symbols");
+            Console.WriteLine($"Please enter your username! Minimal lenght: {minLenghtOfString} symbols, maximum lenght {maxLength} symbols. Must contain only lowercase!");
             int counterOfEligible = 3;
             bool thisUserNameExistInDatabase = false;
             string username = "";
