@@ -133,17 +133,26 @@ namespace CompanyManagementSystem.Start
             {
                 Console.WriteLine($"You have {myMaterials.Count} materials and they are:");
                 Console.WriteLine(string.Join(", ", myMaterials.Select(m => m.Title)));
-                Console.WriteLine("If you wannt change a material, write the title:");
-                string currentTitleOfMaterialToChnage = Console.ReadLine();
-                Material currentMaterialToChange = myMaterials
-                                                .FirstOrDefault(m => m.Title == currentTitleOfMaterialToChnage);
-                if (currentMaterialToChange != null)
+                Console.WriteLine("If you wannt change a material, write the 1 or if you want create new one write 2");
+                string commandForChangeOrCreate = Console.ReadLine();
+                if (commandForChangeOrCreate == "1")
                 {
-                    ChangeYourOwnMaterial(context, currentEmployee, currentTitleOfMaterialToChnage, currentMaterialToChange);
+                    Console.WriteLine("Write the title ot your new material");
+                    string currentTitleOfMaterialToChnage = Console.ReadLine();
+                    Material currentMaterialToChange = myMaterials
+                                                    .FirstOrDefault(m => m.Title == currentTitleOfMaterialToChnage);
+                    if (currentMaterialToChange != null)
+                    {
+                        ChangeYourOwnMaterial(context, currentEmployee, currentTitleOfMaterialToChnage, currentMaterialToChange);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Sorry you have not a material with name {currentTitleOfMaterialToChnage}. Do you want to create it?");
+                       
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"Sorry you have not a material with name {currentTitleOfMaterialToChnage}. Do you want to create it?");
                     AddNewMaterial(context, currentEmployee);
                 }
             }
