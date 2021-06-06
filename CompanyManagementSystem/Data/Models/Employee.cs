@@ -69,10 +69,8 @@ namespace CompanyManagementSystem.Data.Models
             }
         }
 
-
+        //check ? to change
         public decimal? Salary { get; set; }
-   
-
 
         public int PositionId { get; set; }
         public Position Position { get; set; }
@@ -105,7 +103,6 @@ namespace CompanyManagementSystem.Data.Models
             return false;
         }
 
-        //TODO
         private bool ValidatePassowrd(string stringToValidate)
         {
             Match match = this.passowrdRegex.Match(stringToValidate);
