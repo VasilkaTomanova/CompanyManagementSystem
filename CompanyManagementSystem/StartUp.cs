@@ -16,8 +16,8 @@ namespace CompanyManagementSystem
             //cb.CreateDatabase(context);
 
             //2. Entry in system 
-            Engine startTheApp = new Engine();
-            startTheApp.Run(context);
+            Engine startTheApp = new Engine(context);
+            startTheApp.Run();
             
         } // end main
 
