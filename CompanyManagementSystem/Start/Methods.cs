@@ -8,7 +8,6 @@ namespace CompanyManagementSystem.Start
 {
     public class Methods
     {
-
         public void ClearTheConsole()
         {
             System.Threading.Thread.Sleep(1000);
@@ -92,11 +91,8 @@ namespace CompanyManagementSystem.Start
             {
                 return true;
             }
-
             return false;
         }
-
-
 
         private void SimulateDataLoading()
         {
