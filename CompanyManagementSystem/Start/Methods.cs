@@ -14,7 +14,7 @@ namespace CompanyManagementSystem.Start
         public void ClearTheConsole()
         {
             System.Threading.Thread.Sleep(1000);
-            Console.WriteLine("Waiting...Disinfection...");
+            Console.WriteLine("Waiting...Clearing console...");
             System.Threading.Thread.Sleep(3000);
             Console.Clear();
             System.Threading.Thread.Sleep(1000);
