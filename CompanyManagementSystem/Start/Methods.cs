@@ -41,7 +41,7 @@ namespace CompanyManagementSystem.Start
 
         public bool RegistrationFrom(CompanyManagementSystemContext context)
         {
-            Employee newEmployeeToRegister = new Employee();
+           
             Console.WriteLine($"Please enter your username! Minimal lenght: {minLenghtOfString} symbols, maximum lenght {maxLength} symbols. Must contain only lowercase!");
             int counterOfEligible = 3;
             bool thisUserNameExistInDatabase = false;
@@ -66,9 +66,10 @@ namespace CompanyManagementSystem.Start
                 return false;
             }
 
-            
+           
             try
             {
+                Employee newEmployeeToRegister = new Employee();
                 newEmployeeToRegister.Username = username;
                 Console.WriteLine("Please enter your password. It must bewtween 4 and four 8 sumbols. Must contain at least one lower letter, one upper letter and one digit!");
                 string password = Console.ReadLine();
