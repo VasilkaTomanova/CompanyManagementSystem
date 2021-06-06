@@ -10,10 +10,13 @@ namespace CompanyManagementSystem
         {
             //1.Create data base
             CompanyManagementSystemContext context = new CompanyManagementSystemContext();
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
-            CreateDataBase cb = new CreateDataBase();
-            cb.CreateDatabase(context);
+
+            // If you wannt to create a simple database with some entities for demo purpose on your computer uncomment there rows!
+
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
+            //CreateDataBase cb = new CreateDataBase();
+            //cb.CreateDatabase(context);
 
             //2. Entry in system 
             Engine startTheApp = new Engine(context);
