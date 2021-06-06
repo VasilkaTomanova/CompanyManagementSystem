@@ -133,11 +133,11 @@ namespace CompanyManagementSystem.Start
             {
                 Console.WriteLine($"You have {myMaterials.Count} materials and they are:");
                 Console.WriteLine(string.Join(", ", myMaterials.Select(m => m.Title)));
-                Console.WriteLine("If you wannt change a material, write the 1 or if you want create new one write 2");
+                Console.WriteLine("If you want change a material write the 1 or if you want create new one write 2");
                 string commandForChangeOrCreate = Console.ReadLine();
                 if (commandForChangeOrCreate == "1")
                 {
-                    Console.WriteLine("Write the title ot your new material");
+                    Console.WriteLine("Write the title of the material wich you want to change");
                     string currentTitleOfMaterialToChnage = Console.ReadLine();
                     Material currentMaterialToChange = myMaterials
                                                     .FirstOrDefault(m => m.Title == currentTitleOfMaterialToChnage);
@@ -153,6 +153,7 @@ namespace CompanyManagementSystem.Start
                 }
                 else
                 {
+                    Console.WriteLine("Write the title ot your new material");
                     AddNewMaterial(context, currentEmployee);
                 }
             }
@@ -228,9 +229,11 @@ namespace CompanyManagementSystem.Start
                 case "3":
                     material.Access = (Access)Enum.Parse(typeof(Access), "Another", true);
                     List<Employee> othersEmployees = context.Employees.Where(e => e.Id != currentEmployee.Id).ToList();
-                    Console.WriteLine("Please enter id numbers of your colleagues to give them permission:");
+                    //TODO if they are not at leats 2 other people
+                    // How many peyple do you want to give permission .. int.Parse..
+                    Console.WriteLine("Please enter 2 (two) ids numbers of your colleagues to give them permission:");
                     Console.WriteLine(string.Join(Environment.NewLine, othersEmployees.Select(e => e.Id + " " + e.Username)));
-                    int numberOfColleagues = 3;
+                    int numberOfColleagues = 2;
                     while (numberOfColleagues-- > 0)
                     {
                         int currentIdToGivePermission = int.Parse(Console.ReadLine());
