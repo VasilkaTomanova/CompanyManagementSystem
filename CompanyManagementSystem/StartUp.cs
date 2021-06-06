@@ -12,7 +12,7 @@ namespace CompanyManagementSystem
             CompanyManagementSystemContext context = new CompanyManagementSystemContext();
 
             // If you wannt to create a simple database with some entities for demo purpose on your computer uncomment these rows!
-
+            // 16-19
             //context.Database.EnsureDeleted();
             //context.Database.EnsureCreated();
             //CreateDataBase cb = new CreateDataBase();
