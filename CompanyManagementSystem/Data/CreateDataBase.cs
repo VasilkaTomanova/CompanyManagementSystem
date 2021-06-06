@@ -29,17 +29,17 @@ namespace CompanyManagementSystem.Data
 
             Employee employee1 = new Employee();
             employee1.FirstName = "Vasilka"; employee1.LastName = "Tomanova";
-            employee1.Username = "vtomanova"; employee1.Password = "123456";
+            employee1.Username = "vtomanova"; employee1.Password = "Vv1234";
             employee1.PositionId = 2; employee1.Salary = 1000;
             employee1.Rank = 3; employee1.IsActiveEmployee = true;
             Employee employee2 = new Employee();
             employee2.FirstName = "Briana"; employee2.LastName = "Dimitrova";
-            employee2.Username = "bridi"; employee2.Password = "654321";
+            employee2.Username = "bridi"; employee2.Password = "Bb1234";
             employee2.PositionId = 4; employee2.Salary = 1500;
             employee2.Rank = 2; employee2.IsActiveEmployee = true;
             Employee employee3 = new Employee();
             employee3.FirstName = "Ivan"; employee3.LastName = "Ivanov";
-            employee3.Username = "iivanov"; employee3.Password = "ivan1234";
+            employee3.Username = "iivanov"; employee3.Password = "Ii12345";
             employee3.PositionId = 1; employee3.Salary = 1800;
             employee3.Rank = 2; employee3.IsActiveEmployee = true;
             context.Employees.Add(employee1);
