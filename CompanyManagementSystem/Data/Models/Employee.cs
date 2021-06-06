@@ -31,11 +31,12 @@ namespace CompanyManagementSystem.Data.Models
             this.usernameRegex = new Regex(usernamePattern);
             this.passowrdRegex = new Regex(passwordPattern);
         }
+
         public int Id { get; set; }
 
         [Required]
         public string FirstName { get; set; }
-        
+
 
         [Required]
         public string LastName { get; set; }
@@ -75,7 +76,7 @@ namespace CompanyManagementSystem.Data.Models
         public int PositionId { get; set; }
         public Position Position { get; set; }
 
-        public int Rank { get; set; }       
+        public int Rank { get; set; }
 
         public int? ManagerId { get; set; }
         public Employee Manager { get; set; }
@@ -92,10 +93,10 @@ namespace CompanyManagementSystem.Data.Models
             this.Salary = newSalary;
         }
 
-        private bool ValidateUsername (string stringToValidate)
+        private bool ValidateUsername(string stringToValidate)
         {
             Match match = this.usernameRegex.Match(stringToValidate);
-            if(match != null)
+            if (match != null)
             {
                 return true;
             }
